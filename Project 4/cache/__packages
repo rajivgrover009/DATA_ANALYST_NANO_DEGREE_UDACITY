@@ -1,0 +1,11 @@
+base
+ggplot2
+tidyr
+dplyr
+GGally
+scales
+lattice
+MASS
+memisc
+gridExtra
+corrplot

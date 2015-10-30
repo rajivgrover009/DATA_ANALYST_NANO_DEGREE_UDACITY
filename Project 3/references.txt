@@ -1,0 +1,2 @@
+ http://www.geonames.org/postalcode-search.html?q=aurora&country=US&adminCode1=CO
+http://wiki.openstreetmap.org/wiki/TIGER_to_OSM_Attribute_Map

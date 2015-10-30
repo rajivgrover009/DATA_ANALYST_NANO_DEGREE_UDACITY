@@ -1,0 +1,64 @@
+---
+title: "Project0_OptmicalChopstickLength"
+author: "Rajiv Kumar"
+date: "Saturday, August 15, 2015"
+output: html_document
+---
+
+In This document , we will see how to perform ANOVA test on a groups of samples means to analyze if they come from the same population or from the different population. Lets first import data in to R
+
+```{r}
+chopdata<-read.csv("chopstick-effectiveness.csv" , header = T)
+```
+
+```{r}
+list.files()
+str(chopdata)
+```
+
+Lets first see some descriptive statistics . In the results , we see that length 240 has the highest mean value. lets dig deeper.
+```{r}
+aggregate(chopdata$Food.Pinching.Efficiency, list(chopdata$Chopstick.Length), mean)
+```
+
+Also lets see the median and STD dev for each group . Median is very close to
+mean for each group, which is a good indication that our data is free of outliers.
+
+```{r}
+aggregate(chopdata$Food.Pinching.Efficiency, list(chopdata$Chopstick.Length), median)
+aggregate(chopdata$Food.Pinching.Efficiency, list(chopdata$Chopstick.Length), sd)
+```
+
+Now lets try to do box plots for each category of length to see , if we see any trend. From the box plots , we see that length 240 has relatively high median than other category but we need to analyze further to see , if that really true and its not by chance.
+```{r, echo=FALSE}
+boxplot(chopdata$Food.Pinching.Efficiency~chopdata$Chopstick.Length)
+```
+
+Now , lets draw line plot to see , if we notice any trend
+```{r}
+
+library(ggplot2)
+ggplot(aes(x=chopdata$Individual, y = chopdata$Food.Pinching.Efficiency),data=chopdata)+geom_line() + facet_wrap(~Chopstick.Length,nrow=4)
+
+
+```
+
+Now lets connect the all plots in single and group them via chopstick length to see , if we see something useful.our line plot suggest that Optimal Food efficiency is achieved for chopstick length=240 mm(shown in green line). It seems to align somewhat with observation through box plots. However, lets dig more deep and do ANOVA to see if our hypothesis is really true.
+```{r}
+ggplot(aes(x=chopdata$Individual, y = chopdata$Food.Pinching.Efficiency ),data=chopdata)+geom_line(aes(group = chopdata$Chopstick.Length,color=factor(chopdata$Chopstick.Length))) 
+        
+```
+
+Lets do ANOVA - for all combinations
+```{r}
+optimallenAnova<-aov(chopdata$Food.Pinching.Efficiency~factor(chopdata$Chopstick.Length))
+summary(optimallenAnova)
+
+```
+Now lets calculate TukeyHSD for each group to see , if have some proof. If you notice , each pair with 240 suggest that the pair has relatively low value for probabibilty than other groups. It means our 240 length might actuall be optimal and this is not by chance.
+```{r}
+TukeyHSD(optimallenAnova)    
+```
+
+
+    

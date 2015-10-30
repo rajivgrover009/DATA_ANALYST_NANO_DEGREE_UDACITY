@@ -1,0 +1,198 @@
+---
+title: "StroopEffect"
+author: "Rajiv Kumar"
+date: "Friday, August 14, 2015"
+output: word_document
+---
+
+Background :
+In a Stroop task, participants are presented with a list of words, with each word displayed in a color of ink. The participant’s task is to say out loud the color of the ink in which the word is printed. The task has two conditions: a congruent words condition, and an incongruent words condition. In the congruent words condition, the words being displayed are color words whose names match the colors in which they are printed: for example RED, BLUE. In the incongruent words condition, the words displayed are color words whose names do not match the colors in which they are printed: for example PURPLE, ORANGE. In each case, we measure the time it takes to name the ink colors in equally-sized lists. Each participant will go through and record a time from each condition.
+
+
+We will answer the questions as we go along our analysis in this document.
+
+Lets first import the data set in R by reading the csv file.
+```{r}
+stroopdf<-read.csv("stroopdata.csv" ,  header = T)
+```
+
+Now Lets analyzet the data frame properties by using str function
+
+
+```{r}
+str(stroopdf)
+```
+
+We can view the data set by using view function
+
+```{r}
+stroopdf
+```
+Lets answer Some of the questions
+
+Question# 1 :
+
+What is our independent variable? What is our dependent variable?
+
+Answer :
+Independent Variable : Independent variable here is words() Congruents and incongruents words).
+Dependent variable : Time it takes to read the words
+
+
+Question # 2 :
+What is an appropriate set of hypotheses for this task? What kind of statistical test do you expect to perform? Justify your choices.
+Answer :
+Samples:
+x_Incongruent = incongruent words samples ,
+x_Congruent = congruent Words samples
+
+Population:
+mean_time(population_incongruent) or µ_incongruent , 
+mean_time(population_congruent) or µ_congruent
+
+Null Hypothesis Ho: µ_incongruent = µ_congruent 
+Description :
+The µ_incongruent and µ_congruent are from the same population - therefore
+results we see between x_incongruent and x_congruents are by chance only.
+
+Alternative Hypothesis Ha: µ_incongruent != µ_congruent 
+Description:
+µ_incongruent and µ_congruent come from different populations .The p-value is the probability of the difference we are noticing between x_congruent and x_incongruent is by chance.
+
+Note: Here we are assuming that we dont know what is stroop effect so we are going to do a two tailed T-Test.
+
+Question # 3 :
+Report some descriptive statistics regarding this dataset. Include at least one measure of central tendency and at least one measure of variability.
+
+Answer :
+Lets first calulate the mean for each sample.
+
+-- Mean time taken for reading Congruent words
+```{r}
+mean(stroopdf$Congruent)
+sd(stroopdf$Congruent)
+```
+-- Median time taken for reading Congruent words
+```{r}
+median(stroopdf$Congruent)
+```
+Intersting , mean and median time for Conguent words is very close. It indicates that data may not have any outliers
+
+-- Mean time taken for reading InCongruent words
+```{r}
+mean(stroopdf$Incongruent)
+sd(stroopdf$Incongruent)
+```
+
+-- Median time taken for reading InCongruent words
+```{r}
+median(stroopdf$Incongruent)
+```
+Intresting , mean and median time for InConguent words is also very close. It indicates that data may not have any outliers
+
+Observation : Mean time taken for reading incongruent words is relatively more than Mean time take for reading
+congruent words.However , this is not sufficient to prove that Incongruent words lead to higher time in reading the words. We need to do additional tests to ensure that this difference is not by chance.
+
+Question # 4:
+Provide one or two visualizations that show the distribution of the sample data. Write one or two sentences noting what you observe about the plot or plots.
+
+Answer :
+
+Lets first draw scatterplot for each sample.
+
+Scatter plot for Time take for congruent words
+```{r}
+library(ggplot2)
+nbrrows = nrow(stroopdf)
+
+ggplot(aes(x=seq(1:24) , y =stroopdf$Congruent) , data= stroopdf) + geom_point()+labs(x= 'participants' , y ='Time Taken(Congruent Words)') + scale_x_discrete(breaks = seq(1,nbrrows))
+
+
+
+
+
+```
+
+Scatter plot for Time take for congruent words
+```{r}
+ggplot(aes(x=seq(1:24) , y =stroopdf$Incongruent) , data= stroopdf) + geom_point()+labs(x= 'participants' , y ='Time Taken(In Congruent Words)')+ scale_x_discrete(breaks = seq(1,nbrrows))
+
+
+
+```
+Since the trend is not very clear with scatter plots so we would use smooth line to connect all the points.
+
+Scatter plot for Time take for congruent words with line geom
+```{r}
+ggplot(aes(x=seq(1:24) , y =stroopdf$Congruent) , data= stroopdf) + geom_line()+labs(x= 'participants' , y ='Time Taken(Congruent Words)') + scale_x_discrete(breaks = seq(1,nbrrows)) 
+
+```
+
+Similarly for Incongruent words
+```{r}
+ggplot(aes(x=seq(1:24) , y =stroopdf$Incongruent) , data= stroopdf) + geom_line()+labs(x= 'participants' , y ='Time Taken(In Congruent Words)')+ scale_x_discrete(breaks = seq(1,nbrrows))
+
+```
+
+We are able to see the plots for each sample but in order to compare both the plots , it is important to draw them on the same plot. Lets try to bring both the plots on the same plot so that we can compare the trend easily.
+Blue line in the below plot represent the time take for reading Incongruent words and the black line represents the time take for reading congruent words.
+```{r}
+
+ggplot(aes(x=seq(1:24) , y =stroopdf$Congruent) , data= stroopdf)  + geom_line() + geom_line(aes(x=seq(1:24) , y =stroopdf$Incongruent)  , data= stroopdf , colour='blue') + geom_line()+ labs(x= 'participants' , y ='Time(Blue=Incongruent,Black = Congruent)') 
+
+
+```
+We can also use bar plots to see the comparison
+```{r}
+barplot(as.matrix(stroopdf),beside = TRUE ,col="blue" ,border='green')
+
+```
+Another good plot here can be box plot. From box plot, we can see that median time taken for Incongruent words is relatively higher.
+
+```{r}
+boxplot(stroopdf$Congruent , stroopdf$Incongruent ,names = c('Congruent','Incongruent')) 
+```
+
+Question # 5 :
+Now, perform the statistical test and report your results. What is your confidence level and your critical statistic value? Do you reject the null hypothesis or fail to reject it? Come to a conclusion in terms of the experiment task. Did the results match up with your expectations?
+
+Answer : Lets to the paired t-test as following . 
+
+our confidence interval is 99% and t statistics is 8.0207
+```{r}
+
+t.test(stroopdf$Incongruent,stroopdf$Congruent,paired=TRUE ,mu=0 , alternative = "two.sided" , conf.level =0.99)
+```
+
+
+A paired-samples t-test was conducted to compare the time taken for reading congruent and incongruent words. There was a significant difference in the Time taken to read congruent words (M=14.05, SD=3.56) and Incongruent words (M=22.01, SD=4.80) 
+conditions; t(23)=8.0207, p = 0.001 , direction = two tailed
+
+These results suggest that it takes longer to read incongruent words.
+
+
+We can see that p-value is very small , which mean we can reject the null hypothesis and conclude that our alternate hypothesis is true. Also , we see positive numbers , which denotes that time taken for incongruent words is relatively higher with mean of differences = 7.964792.
+
+The test results match with our expectations as our sample statistics i.e mean ,median also indicated the same. Also, our plots(line plots and box plots) were indicating the same results.
+
+
+Question#6:
+Optional: What do you think is responsible for the effects observed? Can you think of an alternative or similar task that would result in a similar effect? Some research about the problem will be helpful for thinking about these two questions!
+
+Answer :
+
+Even though, there are several theories about what is responsible for the effects observed but i agree mostly with the following theory :
+Selective attention : (source wikipedia)
+The Selective Attention Theory suggests that color recognition as opposed to reading a word, requires more attention, the brain needs to use more attention to recognize a color than to word encoding, so it takes a little longer.[15] The responses lend much to the interference noted in the Stroop task. This may be a result of either an allocation of attention to the responses or to a greater inhibition of distractors that are not appropriate responses.
+
+Following task would have same stroop effect.
+In this experiment you are required to count the number of words in each box, Do NOT say what the word says. Here are two examples:
+-----------------------------------------------------------------
+dog-
+dog- You should say "Two" because the word dog is shown two times.
+------------------------------------------------------------------
+one
+one
+one-You should say "Three" because the word one is shown three times.
+--------------------------------------------------------------
+
