@@ -127,6 +127,7 @@
           x=bubbles.addCategoryAxis("x", "countryName");
           
           y=bubbles.addMeasureAxis("y", "co2");
+          //y.overrideMax=6,000,00000,0000;
           // var barcolor=  defaultColor.fill;
           // barcolor.opacity=0.2;
           // //bubbles.addColorAxis("c",  barcolor);
@@ -172,11 +173,13 @@
             .text(d3.format(",.1f")(data.yValue / 1000) + "K");
         
       };
-
+          y.overrideMax= 6000000;
+          y.overrideMin = 0;
+          
           bubbles.draw();
           y.titleShape.text("Co2 Emissions(KT)");
           x.titleShape.text("");
-
+          
           // Orphan the legends as they are consistent but by default they
           // will refresh on tick
           bubbles.legends = [];
@@ -206,6 +209,7 @@
                           .duration(frame / 2)
                           .style("fill", function (d) { return (d.y === e ? indicatorColor.fill : defaultColor.fill) })
                           .style("stroke", function (d) { return (d.y === e ? indicatorColor.stroke : defaultColor.stroke) });
+
                            y.titleShape.text("Co2 Emissions(KT)");
                            x.titleShape.text("");
                            d3.selectAll('svg').selectAll('.barvalue').remove();
