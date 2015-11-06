@@ -1,0 +1,4 @@
+# Identifying POI in enron data set
+
+In this project, we will use machine learning techniques to identify Person of interest
+from the enron data set.We will see the use of various algorithms in this project.

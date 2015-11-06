@@ -1,0 +1,5 @@
+# Data Wrangling using Python
+
+In this project we will use open street data maps and will clean the data set and fix
+some of the underlying problems with the data. We will use python in this project and 
+you can refer to the python file to see the code.

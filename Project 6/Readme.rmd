@@ -1,0 +1,3 @@
+# Effective Data visualization
+
+To give a little background,I have used dimple.js and d3.js to draw a bar chart for co2 emissions in G7 countries at five years interval starting from year 1961 to 2010. This bar chart provides a comparative description about the increasing co2 emission levels. User can use click on the year value on the right hand side to view the respective co2 emissions in the year. The chart, by default, starts the animation and continues the animation until user select any particular year.
