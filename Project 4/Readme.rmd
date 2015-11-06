@@ -1,0 +1,4 @@
+# Exploratory Data Analysis:
+
+In this project, i have done exploratory data analysis using ggplot library and using white wine data set. Towards the end, i have also used linear regression as an example
+for illustration. However, linear model is not hte best choice in this case.
