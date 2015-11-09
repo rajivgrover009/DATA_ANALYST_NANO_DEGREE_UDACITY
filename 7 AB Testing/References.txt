@@ -1,0 +1,3 @@
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1112991/
+http://www.evanmiller.org/ab-testing/sample-size.html
+http://graphpad.com/quickcalcs/binomial1.cfm

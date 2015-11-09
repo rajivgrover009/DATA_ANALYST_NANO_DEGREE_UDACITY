@@ -1,6 +1,0 @@
-# New york subway data 
-
-In this project we will perform exploratory data analysis and will see an exmaple
-of linear model , for the purpose of illustration. Please note that linear model
-is not the right choice for this problem but we will use it for illustration purpose
-as it is easy to understand.
