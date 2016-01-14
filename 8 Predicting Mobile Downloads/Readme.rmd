@@ -1,4 +1,4 @@
-#Background : 
+
 ###Background:
 
 1. ~700k rows of ranking data (App_ID Country Date Hour Device Rank)
