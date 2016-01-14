@@ -1,0 +1,17 @@
+#Background : 
+###Background:
+
+1. ~700k rows of ranking data (App_ID Country Date Hour Device Rank)
+2. ~ 3.5k rows of download data (App_ID Country Date Device Downloads)
+
+The rank of an app for a given (country, date, hour, device) combination represents its position in an ordered list of app_ids associated with the combination.
+
+For example, in USA, on 5/13/14 at 20:00:00 hours, the apps on iPhone top free charts had the following order [454, 1549, 2171]. App 454 was rank 1, app 1549 was rank 2 and app 2171 was rank 3.
+
+We want to answer following questions:
+####What are your initial observations about the ranking and download datasets?
+####Question#2:What patterns do you see in the download dataset?
+####3) Which segments should you divide the data into before analyzing the relationship between ranks and downloads?
+#### 4)  What is the relationship between ranks and downloads?
+####5) What is the best measure to use to calculate an average daily rank for an app from its hourly ranks? (Mean, Median, Harmonic Mean, etc.)
+####6) Create a model to predict downloads from average daily rank.
