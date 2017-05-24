@@ -1,0 +1,1 @@
+In this exercise, we will use resume data and predict flagged vs Non-flagged values for a given resume. DataSet contains total of 125 Resume and we will use NaiveBayes algorithm to classify the Resumes.
